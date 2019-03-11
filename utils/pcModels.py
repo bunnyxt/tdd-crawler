@@ -35,7 +35,7 @@ class Producer3(Thread):
                     # print('[+] produce %s_%s' % (index, pitem))
 
                     time.sleep(self._sleepsec)
-        time.sleep(10)
+        time.sleep(5)
         for _ in range(self._cthread_num):
             self._queue.put((self._range[1], None))  # 结束任务标记
 
@@ -121,6 +121,6 @@ class Consumer(Thread):
                 if index is None or data is None:  # 任务结束标记
                     break
                 # self._func(index, data, session=self._session, csvwriter=self._csvwriter) # error here
-                self._func(aid=data, session=self._session, csvwriter=self._csvwriter)
+                self._func(aid=data, session=self._session)
 
                 # print('[-] consumed %s_%s\n' % (index, data))
