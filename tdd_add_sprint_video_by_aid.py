@@ -1,5 +1,5 @@
 """
-tdd add focus video by aid
+tdd add sprint video by aid
 """
 import sys
 from biliapi import TddAddSprintVideo

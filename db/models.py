@@ -19,7 +19,8 @@ class TddSprintVideo(Base):
     pages = Column(Integer)
     created = Column(Integer)
     copyright = Column(Integer)
-    singer = Column(String(100), default='')  # singer(s) 
+    singer = Column(String(100), default='')  # singer(s)
+    status = Column(String(20), default='processing')  # video status
 
     def __repr__(self):
         return "<TddSprintVideo(aid=%d,title=%s)>" % (self.aid, self.title)

@@ -15,8 +15,10 @@ from utils import Producer3, Consumer, Timer
 def get_update_aids():
     result = []
     items = DBOperation.query(TddSprintVideo, Session())
+    print(items)
     for item in items:
-        result.append(item.aid)
+        if item.status == 'processing':
+            result.append(item.aid)
     return result
 
 
@@ -49,6 +51,8 @@ def tdd_update_sprint_video_task(get_session):
 
 
 if __name__ == '__main__':
+
+    tdd_update_sprint_video(Session)
 
     schedule.every(10).minutes.do(tdd_update_sprint_video_task, Session)
 

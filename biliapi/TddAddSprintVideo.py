@@ -10,7 +10,7 @@ from .support import get_timestamp_ms, get_timestamp_s
 class TddAddSprintVideo:
     """add sprint video"""
     field_keys = ('added', 'mid', 'aid', 'tid', 'cid', 'typename', 'arctype', 'title',
-                  'pic', 'pages', 'created', 'copyright', 'singer')
+                  'pic', 'pages', 'created', 'copyright', 'singer', 'status')
 
     def __init__(self, aid):
         self.aid = aid
@@ -92,6 +92,7 @@ class TddAddSprintVideo:
     def add_sprint_video(cls, aid, session=None):
         new_video_info = cls.get_sprint_video_info(aid)
         new_video_info = new_video_info + ('',)  # add singer
+        new_video_info = new_video_info + ('processing',)  # add status
         if new_video_info:
             print(dict(zip(cls.field_keys, new_video_info)))
             new_sprint_video = TddSprintVideo(**dict(zip(cls.field_keys, new_video_info)))
