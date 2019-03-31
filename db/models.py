@@ -43,3 +43,18 @@ class TddSprintVideoRecord(Base):
 
     def __repr__(self):
         return "<TddFocusVideoRecord(aid=%d,view=%d)>" % (self.aid, self.view)
+
+
+class TddMember(Base):
+    """Tdd Member"""
+    __tablename__ = 'tdd_member'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    added = Column(Integer)  # item add time
+    mid = Column(Integer, unique=True)
+    sex = Column(String(20))
+    name = Column(String(100))
+    face = Column(String(100))
+
+    def __repr__(self):
+        return "<TddMember(mid=%d,name=%s)>" % (self.mid, self.name)

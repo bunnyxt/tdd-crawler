@@ -1,2 +1,3 @@
 from .TddAddSprintVideo import TddAddSprintVideo
 from .TddAddSprintVideoRecord import TddAddSprintVideoRecord
+from .TddAddMember import TddAddMember
