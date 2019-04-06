@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from .basic import Base
 
 
@@ -58,3 +58,39 @@ class TddMember(Base):
 
     def __repr__(self):
         return "<TddMember(mid=%d,name=%s)>" % (self.mid, self.name)
+
+
+class TddSprintDaily(Base):
+    """Tdd Sprint Daily"""
+    __tablename__ = 'tdd_sprint_daily'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    added = Column(Integer)  # item add time
+    date = Column(String(20))
+    correct = Column(Boolean)
+    vidnum = Column(Integer)
+    newvids = Column(String(100))
+    millvids = Column(String(100))
+    viewincr = Column(Integer)
+    viewincrincr = Column(Integer)
+    comment = Column(String(100))
+
+    def __repr__(self):
+        return "<TddSprintDaily(date=%s)>" % self.date
+
+
+class TddSprintDailyRecord(Base):
+    """Tdd Sprint Daily Record"""
+    __tablename__ = 'tdd_sprint_daily_record'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    added = Column(Integer)  # item add time
+    date = Column(String(20))
+    aid = Column(Integer)
+    view = Column(Integer)
+    viewincr = Column(Integer)
+    pday = Column(Integer)
+    lday = Column(Integer)
+
+    def __repr__(self):
+        return "<TddSprintDailyrecord(date=%s,aid=%d)>" % (self.date, self.aid)
