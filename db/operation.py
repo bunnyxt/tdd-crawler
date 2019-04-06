@@ -4,6 +4,8 @@ from pymysql.err import IntegrityError as PymysqlIntegrityError
 # from psycopg2 import IntegrityError as pgIntegrityError
 from sqlalchemy.exc import InvalidRequestError
 from logger import storagelog
+from db import TddSprintVideoRecord
+from sqlalchemy import and_
 
 
 def db_commit_decorator(func):
@@ -45,6 +47,18 @@ class DBOperation:
     def query(cls, table, db_session):
         try:
             result = db_session.query(table).all()
+            return result
+        except Exception as e:
+            print(e)
+
+    @classmethod
+    @db_commit_decorator
+    def query_vid_record(cls, aid, ts, db_session):
+        try:
+            result = db_session.query(TddSprintVideoRecord) \
+                .filter(and_(TddSprintVideoRecord.aid == aid, TddSprintVideoRecord.added >= ts)) \
+                .limit(1)\
+                .all()
             return result
         except Exception as e:
             print(e)
