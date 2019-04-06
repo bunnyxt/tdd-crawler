@@ -1,3 +1,5 @@
 from .TddAddSprintVideo import TddAddSprintVideo
 from .TddAddSprintVideoRecord import TddAddSprintVideoRecord
 from .TddAddMember import TddAddMember
+from .TddAddSprintDaily import TddAddSprintDaily
+from .TddAddSprintDailyRecord import TddAddSprintDailyRecord
