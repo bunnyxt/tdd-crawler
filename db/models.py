@@ -20,6 +20,8 @@ class TddSprintVideo(Base):
     created = Column(Integer)
     copyright = Column(Integer)
     singer = Column(String(100), default='')  # singer(s)
+    solo = Column(Boolean)  # is solo or not
+    original = Column(Boolean)  # is original or not
     status = Column(String(20), default='processing')  # video status
 
     def __repr__(self):
