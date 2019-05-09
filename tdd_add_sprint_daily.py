@@ -11,7 +11,7 @@ from biliapi import TddAddSprintDaily, TddAddSprintDailyRecord
 from biliapi.support import get_timestamp_s
 
 
-def tdd_add_sprint_daily(date):
+def tdd_add_sprint_daily(date, get_session):
     # format date
     if date == -1:
         # get now time to format as date
@@ -25,7 +25,7 @@ def tdd_add_sprint_daily(date):
     sprint_videos = []
     new_videos = []
     million_videos = []
-    items = DBOperation.query(TddSprintVideo, Session())
+    items = DBOperation.query(TddSprintVideo, get_session())
     for item in items:
         if item.added < end_ts:
             if item.status == 'processing':  # notice: may cause error when calc history daily
@@ -38,12 +38,12 @@ def tdd_add_sprint_daily(date):
 
     # get records
     for (aid, created) in sprint_videos:
-        start_record = DBOperation.query_vid_record(aid, start_ts, Session())
+        start_record = DBOperation.query_vid_record(aid, start_ts, get_session())
         if len(start_record) == 1:
             start_record = start_record[0]
         else:
             start_record = 0
-        end_record = DBOperation.query_vid_record(aid, end_ts, Session())
+        end_record = DBOperation.query_vid_record(aid, end_ts, get_session())
         if len(end_record) == 1:
             end_record = end_record[0]
         else:
@@ -57,7 +57,7 @@ def tdd_add_sprint_daily(date):
         view_incr += view_increment
         new_daily_record_info = (get_timestamp_s(), date, aid, view, view_increment, pday, lday)
         print(new_daily_record_info)
-        TddAddSprintDailyRecord.add_sprint_daily_record(new_daily_record_info, Session())
+        TddAddSprintDailyRecord.add_sprint_daily_record(new_daily_record_info, get_session())
 
     new_videos_str = ""
     for new_video in new_videos:
@@ -66,7 +66,7 @@ def tdd_add_sprint_daily(date):
     for million_video in million_videos:
         million_videos_str += (str(million_video) + ';')
     view_incr_incr = 0
-    all_daily = DBOperation.query(TddSprintDaily, Session())
+    all_daily = DBOperation.query(TddSprintDaily, get_session())
     if len(all_daily) > 0:
         last_daily = all_daily[-1]
         i = len(all_daily) - 1
@@ -82,13 +82,13 @@ def tdd_add_sprint_daily(date):
     new_daily_info = (get_timestamp_s(), date, True, vidnum, new_videos_str, million_videos_str,
                       view_incr, view_incr_incr, comment)
     print(new_daily_info)
-    TddAddSprintDaily.add_sprint_daily(new_daily_info, Session())
+    TddAddSprintDaily.add_sprint_daily(new_daily_info, get_session())
 
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         # schedule
-        schedule.every().day.at("06:30").do(tdd_add_sprint_daily, -1)
+        schedule.every().day.at("06:30").do(tdd_add_sprint_daily, -1, Session)
         while True:
             schedule.run_pending()
             time.sleep(10)
