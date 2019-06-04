@@ -95,4 +95,4 @@ if __name__ == '__main__':
     else:
         # manual
         date = sys.argv[1]
-        tdd_add_sprint_daily(str(date))
+        tdd_add_sprint_daily(str(date), Session)
